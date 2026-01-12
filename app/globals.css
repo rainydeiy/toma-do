@@ -1,49 +1,13 @@
 @import "tailwindcss";
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
 
 body {
   font-family: var(--font-gaegu);
   background-color: white;
 }
 
-button{
-  background-color: #FD978F;
-  font-size: 30px;
-  color: white;
-  border-radius: 40px;
-  padding: 0 48px;
-  cursor: pointer;
-}
-
 button:hover{
   opacity: 0.7;
-}
-
-.container{
-  color: #FF331F;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  gap: 8px;
-  height: 100vh;
-}
-
-.container2{
-  position: fixed;
-  bottom: 20px;
-  left: 50%;
-  transform: translateX(-50%);
-  display: flex;
-  flex-direction: row;
-  gap: 20px;
-}
-
-.navbar{
-  color: black;
-  font-size: 20px;
-  text-decoration: underline;
-}
-
-.navbar:hover{
-  color: #ffe5e3;
 }

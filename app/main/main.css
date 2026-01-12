@@ -1,21 +1,47 @@
 @import "tailwindcss";
 
-.container3{
+.container-drop{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+  margin: 0;
+  position: relative;
+}
+
+.container-shift{
   display: flex;
   align-items: center;
   justify-content: center;
   flex-direction: row;
   gap: 10px;
+  position: relative;
+}
+
+.margin-top{
   margin-top: 100px;
 }
 
-.container4{
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-  align-items: center;
-  margin: 0;
+.base{
+  margin-top: 0px;
+  width: 370px;
+  display: block;
+}
+
+.base-wrapper{
   position: relative;
+  width: fit-content;
+}
+
+.task-placeholder{
+  color: black;
+  font-size: 16px;
+  text-align: center;
+
+  position: absolute;
+  top: 50%;
+  left: 19%;
+  transform: translate(0, -50%);
 }
 
 .calendar{
@@ -28,22 +54,35 @@
   font-family: var(--font-poppins);
   display: flex;
   flex-direction: column;
+  flex-shrink: 0  ;
   align-items: center;
   justify-content: center;
-  margin: 0;
-  padding: 0;
   line-height: 1.1;
-  font-variant-numeric: tabular-nums;
 }
 
 .progress-container{
-  width: 261px;
+  width: 200px;
   height: 16px;
-  background-color: #D1FFD1;
+  background-color: #a9efaa;
   border-radius: 10px;
+  overflow: hidden;
 }
 
-.write-box{
+.progress-fill{
+  height: 100%;
+  background-color: #008502;
+  border-radius: 10px;
+  width: 0%;
+  transition: 0.3s ease;
+}
+
+.progress-text{
+  font-size: 14px;
+  margin: 0;
+  padding: 0;
+}
+
+.fill-box{
   width: 265px;
   height: 65px;
   background-color: #93E094;
@@ -53,33 +92,96 @@
   outline: none;
 }
 
-.pencet-tomat{
-  width: 30px;
-  height: 30px;
-  cursor: pointer;
-  position: absolute;
-  inset: 0;
-  z-index: 5;
-  left: 220px;
-  top: 43px;
-}
+.task-list{
+  font-size: 18px;
 
-.barisan-tomat{
+  position: absolute;
+  top: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+
+  width: 320px;
+  padding: 0;
+  margin: 0;
+  cursor: default;
+ 
   display: flex;
   flex-direction: column;
-  margin: 10px;
   gap: 10px;
-  position: absolute;
-  top: 222px;
-  left: 128px;
+
+  z-index: 2;
+
+  max-height: 250px;
+  overflow-y: auto;
 }
 
-.pencetan-tomat{
-  width: 40px;
-  height: 40px;
+.task-item{
+  background-color: pink;
+
+  display: flex;
+  flex-direction: row;  
+  align-items: center;
+  gap: 10px;
+
+  padding: 0 7px;
+}
+
+.button-OK{
+  width: 30px;
+  height: 20px;
+  border-radius: 4;
+  background-color: #008502;
+  color: white;
+  cursor: pointer;
+  position: absolute;
+  inset: 0;
+  z-index: 5;
+  left: 320px;
+  top: 52px;
+}
+
+.button-back{
+  margin-top: 20px;
+  font-size: 30px;
+  color: white;
+  border-radius: 40px;
+  padding: 0 60px;
+  cursor: pointer;
+  background-color: #55AE56;
+}
+
+.button-tomato{
+  width: 20px;
+  height: 20px;
   cursor: pointer;
   inset: 0;
   z-index: 5;
+  flex-shrink: 0;
+}
+
+.button-X{
+  background: none;
+  border: none;
+
+  width: 16px;
+  height: 16px;
+
+  position: relativea;
+  top: 20%;
+
+  opacity: 0;
+  pointer-events: none;
+
+  margin-left: auto;
+  cursor: pointer;
+}
+
+.task-item:hover .button-X{
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.button-X img{
 }
 
 .day {
@@ -93,19 +195,4 @@
 
 .year {
   font-size: 14px;
-}
-
-.button2{
-  margin-top: 20px;
-  font-size: 30px;
-  color: white;
-  border-radius: 40px;
-  padding: 0 60px;
-  cursor: pointer;
-  background-color: #93E094;
-}
-
-.base{
-  margin-top: 0px;
-  width: 370px;
 }
