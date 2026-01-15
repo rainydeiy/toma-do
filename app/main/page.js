@@ -1,5 +1,3 @@
-// FORCE CHANGE CHECK
-
 "use client";
 
 import { useEffect, useState } from "react";
@@ -16,41 +14,37 @@ export default function Page(){
     const [completedCount, setCompletedCount] = useState(0);
     const [totalCount, setTotalCount] = useState(0);
 
+    const progressPercent = 
+        totalCount === 0 ? 0 : ((completedCount / totalCount) * 100);
+
     const addTask = () => {
         if (!task.trim()) return;
 
+        setTasks(prev => [...prev, { text: task }]);
+        setTotalCount(prev => prev + 1);
         setTask("");
-        setTasks([...tasks, task]);
-        setTotalCount((prev) => prev + 1);
     }
 
     const deleteTask = (index) => {
-            setTasks((prevTasks) =>
-            prevTasks.filter((_, i) => i !== index)
-        );
+        setTasks(tasks.filter((_, i) => i !== index));
+        setTotalCount(prev => Math.max(prev - 1, 0));
     };
 
     const completeTask = (index) => {
-        setTasks((prev) => prev.filter((_, i) => i !== index));
-        setCompletedCount((prev) => prev + 1);
-    };
+        setCompletedCount(prev => prev + 1);
 
-    const progressPercent = 
-    totalCount === 0
-        ? 0
-        : Math.min((completedCount / totalCount) * 100, 100);
+        setTimeout(() => {
+            setTasks(prev => prev.filter((_, i) => i !== index));
+        }, 300);
+    };
 
     useEffect(() => {
         const savedDate = localStorage.getItem("lastDate");
 
-        if (savedDate === todayKey) {
-            const savedTasks = JSON.parse(localStorage.getItem("tasks")) || [];
-            const savedCompleted = Number(localStorage.getItem("completedCount")) || [];
-            const savedTotal = Number(localStorage.getItem("totalCount")) || 0;
-
-            setTasks(savedTasks);
-            setCompletedCount(savedCompleted);
-            setTotalCount(savedTotal);
+    if (savedDate === todayKey) {
+            setTasks(JSON.parse(localStorage.getItem("tasks")) || []);
+            setCompletedCount(Number(localStorage.getItem("completedCount")) || 0);
+            setTotalCount(Number(localStorage.getItem("totalCount")) || 0);    
         } else {
             localStorage.setItem("lastDate", todayKey);
             localStorage.setItem("tasks", JSON.stringify([]));
@@ -61,9 +55,10 @@ export default function Page(){
             setCompletedCount(0);
             setTotalCount(0);
         }
-
+        
         setIsLoaded(true);
     }, [todayKey]);
+
 
     useEffect(() => {
         if (!isLoaded) return;
@@ -88,9 +83,10 @@ export default function Page(){
                                 <div className="progress-container">
                                     <div className="progress-fill" style={{width: `${progressPercent}%`}}></div>
                                 </div>
-                                <p className={`progress-text ${totalCount === 0 ? "empty" : "" }`}>
-                                    {completedCount}/{totalCount} 🍅
-                                </p>
+                                    <p className={`progress-text ${totalCount === 0 ? "empty" : ""}`}>
+                                        {completedCount}/{totalCount} 🍅
+                                    </p>
+
                             </div>
                             <input type ="text" placeholder="What's your today task?" value={task} onChange={(e)=> setTask(e.target.value)} className="fill-box"/>
                         </div>
@@ -110,7 +106,7 @@ export default function Page(){
                             tasks.map((t, i) => (
                             <li key={i} className="task-item">
                                 <img src="/tomat.png" className="button-tomato" aria-label="Complete task" onClick={()=> completeTask(i)}/>
-                                <span>{t}</span>
+                                <span>{t.text}</span>
                                 <button className="button-X" onClick={() =>deleteTask(i)}> 
                                     <img src="/delete.png" alt="" /> 
                                 </button>
